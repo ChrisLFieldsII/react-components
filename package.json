@@ -1,7 +1,7 @@
 {
   "name": "@chrisfieldsii/react-components",
   "description": "Some useful components for React",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "dist/index.js",
   "license": "MIT",
   "repository": {
