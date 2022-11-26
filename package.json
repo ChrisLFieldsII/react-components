@@ -30,7 +30,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "react-infinite-scroll-hook": "^4.0.4"
+    "react-infinite-scroll-hook": "^4.0.4",
+    "@chrisfieldsii/ts-utils": "link:/Users/667515/Documents/repos/ts-utils"
   },
   "peerDependencies": {
     "@chakra-ui/react": "^1 || ^2",

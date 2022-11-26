@@ -5,18 +5,22 @@ import {
 } from '@chakra-ui/react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import React from 'react';
+import { getArrayItemMetadata } from '@chrisfieldsii/ts-utils';
 
-import { InfiniteQueryAdapter } from '~/utils';
+import { InfiniteQueryAdapter, renderNull } from '../utils';
 
 export type ListProps<T> = ChakraListProps & {
   items?: T[];
   renderItem: (item: T, index: number) => React.ReactNode;
+  /** will not render f */
+  renderItemSeparator?: (item: T, index: number) => React.ReactNode;
   keyExtractor?: (item: T, index?: number) => string;
 };
 
 export function List<T>({
   items = [],
   renderItem,
+  renderItemSeparator = renderNull,
   keyExtractor = (item: any, index?: number) => {
     return item.id || index?.toString();
   },
@@ -25,10 +29,17 @@ export function List<T>({
   return (
     <ChakraList {...restProps}>
       {items.map((item, index) => {
+        const { isLast } = getArrayItemMetadata(items, index);
+        const canRenderSeparator = !isLast;
+
         return (
-          <ChakraListItem key={keyExtractor(item, index)}>
-            {renderItem(item, index)}
-          </ChakraListItem>
+          <>
+            <ChakraListItem key={keyExtractor(item, index)}>
+              {renderItem(item, index)}
+            </ChakraListItem>
+
+            {canRenderSeparator ? renderItemSeparator(item, index) : null}
+          </>
         );
       })}
     </ChakraList>
