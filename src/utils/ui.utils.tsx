@@ -20,17 +20,17 @@ export type InfiniteQueryAdapter<TData, TError = unknown> = {
 /**
  * convert react-query infinite query to custom type for component layer
  */
-export const infiniteQueryAdapter = <TData = unknown, TError = unknown>(
+export function infiniteQueryAdapter<TData = unknown, TError = unknown>(
   query: UseInfiniteQueryResult<TData, TError>,
   fetchNextPage: () => void
-): InfiniteQueryAdapter<TData, TError> => {
+): InfiniteQueryAdapter<TData, TError> {
   return {
     hasNextPage: query.hasNextPage || false,
     isNextPageLoading: query.isLoading,
     items: query.data?.pages.flatMap(page => page) || [],
     fetchNextPage,
   };
-};
+}
 
 /** reps a mutation that can be passed to component layer to decouple from any lib */
 export type MutationAdapter<
@@ -50,13 +50,13 @@ export type MutationAdapter<
  * this allows us to directly pass mutations to components through this adapter.
  * those components can then easily mock mutation adapters in storybook w/o react-query.
  */
-export const mutationAdapter = <
+export function mutationAdapter<
   TData = unknown,
   TError = unknown,
   TVariables = void
 >(
   mutation: UseMutationResult<TData, TError, TVariables>
-): MutationAdapter<TData, TError, TVariables> => {
+): MutationAdapter<TData, TError, TVariables> {
   return {
     mutate: mutation.mutateAsync,
     isError: mutation.isError,
@@ -64,7 +64,7 @@ export const mutationAdapter = <
     isSuccess: mutation.isSuccess,
     error: mutation.error || undefined,
   };
-};
+}
 
 /** standard props for a form component */
 export type FormProps<T> = {
